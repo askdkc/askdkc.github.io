@@ -1,3 +1,8 @@
-theme: jekyll-theme-minima
+theme: minima
 title: dKc's GitHub.io
+author: dkc
 description: Bookmark this to keep an eye on my project updates!
+github_username:  askdkc
+
+minima:
+  date_format: "%Y-%m-%d %H:%M"
