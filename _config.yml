@@ -5,7 +5,7 @@ description: There is no spoon.
 github_username:  askdkc
 
 minima:
-  date_format: "%Y-%m-%d %H:%M"
+  date_format: "%Y-%m-%d"
 
   social_links:
     - { platform: github,         user_url: "https://github.com/askdkc" }
