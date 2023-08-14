@@ -1,5 +1,9 @@
 ---
 layout: post
+title: "What is this?"
+categories: xtra
+author:
+- dkc
 ---
 I have no idea.
 
