@@ -1,5 +1,6 @@
 ---
 layout: post
+title: "Supabase+PGroonga using Svelte Front End"
 categories: 
 - supabase
 - pgroonga
