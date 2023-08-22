@@ -55,9 +55,9 @@ INSERT INTO memos VALUES (4, 'groongaコマンドがあります。','今日は�
 CREATE INDEX pgroonga_title_search_index ON memos USING pgroonga (title) 
   WITH (
     normalizers = 'NormalizerNFKC150(
-			"unify_to_romaji", true,
-			"unify_hyphen_and_prolonged_sound_mark", true
-		)',
+	  "unify_to_romaji", true,
+	  "unify_hyphen_and_prolonged_sound_mark", true
+	 )',
     tokenizer='TokenNgram(
       "unify_alphabet", false,
       "unify_symbol", false,
@@ -69,9 +69,9 @@ CREATE INDEX pgroonga_title_search_index ON memos USING pgroonga (title)
 CREATE INDEX pgroonga_content_search_index ON memos USING pgroonga (content) 
   WITH (
     normalizers = 'NormalizerNFKC150(
-			"unify_to_romaji", true,
-			"unify_hyphen_and_prolonged_sound_mark", true
-		)',
+	  "unify_to_romaji", true,
+	  "unify_hyphen_and_prolonged_sound_mark", true
+	 )',
     tokenizer='TokenNgram(
       "unify_alphabet", false,
       "unify_symbol", false,
