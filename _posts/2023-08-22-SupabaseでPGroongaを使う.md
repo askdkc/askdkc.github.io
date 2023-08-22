@@ -44,6 +44,7 @@ INSERT INTO memos VALUES (1, 'PostgreSQLはリレーショナル・データベ�
 INSERT INTO memos VALUES (2, 'Groongaは日本語対応の高速な全文検索エンジンです。','スゴイデショウ');
 INSERT INTO memos VALUES (3, 'PGroongaはインデックスとしてGroongaを使うためのPostgreSQLの拡張機能です。','ハバナイスデー');
 INSERT INTO memos VALUES (4, 'groongaコマンドがあります。','今日はコンバンワこんにちわ');
+
 ```
 
 - サンプルデータへの検索用`PGroonga`インデックス作成
@@ -54,30 +55,31 @@ INSERT INTO memos VALUES (4, 'groongaコマンドがあります。','今日は�
 CREATE INDEX pgroonga_title_search_index ON memos USING pgroonga (title) 
   WITH (
     normalizers = 'NormalizerNFKC150(
-							"unify_to_romaji", true,
-							"unify_hyphen_and_prolonged_sound_mark", true
-						)',
+			"unify_to_romaji", true,
+			"unify_hyphen_and_prolonged_sound_mark", true
+		)',
     tokenizer='TokenNgram(
-                          "unify_alphabet", false,
-                          "unify_symbol", false,
-                          "unify_digit", false,
-                          "report_source_location", true
-                      )',
+      "unify_alphabet", false,
+      "unify_symbol", false,
+      "unify_digit", false,
+      "report_source_location", true
+    )',
   );
   
 CREATE INDEX pgroonga_content_search_index ON memos USING pgroonga (content) 
   WITH (
     normalizers = 'NormalizerNFKC150(
-							"unify_to_romaji", true,
-							"unify_hyphen_and_prolonged_sound_mark", true
-						)',
+			"unify_to_romaji", true,
+			"unify_hyphen_and_prolonged_sound_mark", true
+		)',
     tokenizer='TokenNgram(
-                          "unify_alphabet", false,
-                          "unify_symbol", false,
-                          "unify_digit", false,
-                          "report_source_location", true
-						)',
+      "unify_alphabet", false,
+      "unify_symbol", false,
+      "unify_digit", false,
+      "report_source_location", true
+		)',
   );
+
 ```
 
 - `PGroonga`検索用ストアドファンクション作成
@@ -98,6 +100,7 @@ BEGIN
   RETURN QUERY SELECT * FROM memos WHERE content &@~ keywords;
 END;
 $$ LANGUAGE plpgsql;
+
 ```
 
 ## アクセス権限の付与
@@ -116,6 +119,7 @@ create policy "Public memos are viewable by everyone."
   on memos for select using (
     true
   );
+
 ```
 
 ## フロントエンドの準備
@@ -162,6 +166,7 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
 ```
 
 5. 検索用フロントエンド作成
@@ -191,7 +196,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
       }
     }
   }
-
 </script>
 
 <main>
