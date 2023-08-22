@@ -7,7 +7,8 @@ categories:
 author:
 - dkc
 ---
-ここではSupabaseで`PGroonga`が使えるので、その使い方の例を書いていきます
+
+Supabaseで`PGroonga`が使えるので、その使い方の例を紹介します
 
 ## まずはサインアップ
 
