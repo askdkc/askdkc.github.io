@@ -11,9 +11,10 @@ author:
 
 ## まずはサインアップ
 
-まずは[supabase](https://supabase.com)にサインアップしてアカウントを作成し、適当に組織を作り、下記のようなダッシュボードにアクセスします
+まずは[supabase](https://supabase.com)にサインアップしてアカウントを作成し、適当に組織を作り、下記のようなダッシュボードにアクセスしDBを作ります
 
-(画像)
+<img width="1418" alt="create-new-project" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/e3ff10ad-047c-4774-9033-1ce03c9edee1">
+
 
 ## ExtensionをONにする
 
@@ -21,9 +22,16 @@ Supabaseは日本語検索に強いPGroongaを使えるので、こいつをON�
 
 左側のDatabaseのExtensionを開いて検索フィールドにPGroongaと入れると出てきます（左側のPGroongaを選択してね）
 
+![pgronnnga-extension](https://github.com/askdkc/askdkc.github.io/assets/7894265/9beb3c6a-bb05-44e1-9883-1aaf9208fb73)
+
+
 ## サンプルデータの作成
 
 PGroongaのオフィシャルドキュメントのハウツー内に[「PostgRESTでPGroongaを使う方法」](https://pgroonga.github.io/ja/how-to/postgrest.html)という記事がありますので、これを参考にサンプルデータを作っていきます
+
+- サンプルデータ
+
+<img width="1418" alt="table-creation" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/ae9ab209-0eee-4817-805d-942c88b5df24">
 
 ```sql
 CREATE TABLE memos (
@@ -37,6 +45,10 @@ INSERT INTO memos VALUES (2, 'Groongaは日本語対応の高速な全文検索�
 INSERT INTO memos VALUES (3, 'PGroongaはインデックスとしてGroongaを使うためのPostgreSQLの拡張機能です。','ハバナイスデー');
 INSERT INTO memos VALUES (4, 'groongaコマンドがあります。','今日はコンバンワこんにちわ');
 ```
+
+- サンプルデータへの検索用`PGroonga`インデックス作成
+
+<img width="1418" alt="create-indexes" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/44377810-dc0a-4407-b659-5357f8e61510">
 
 ```sql
 CREATE INDEX pgroonga_title_search_index ON memos USING pgroonga (title) 
@@ -68,6 +80,44 @@ CREATE INDEX pgroonga_content_search_index ON memos USING pgroonga (content)
   );
 ```
 
+- `PGroonga`検索用ストアドファンクション作成
+
+<img width="1418" alt="create-function" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/db6bfeca-b581-45ee-aefc-930b29d5bec5">
+
+```sql
+-- Title検索用
+CREATE FUNCTION find_title(keywords text) RETURNS SETOF memos AS $$
+BEGIN
+  RETURN QUERY SELECT * FROM memos WHERE title &@~ keywords;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Content検索用
+CREATE FUNCTION find_content(keywords text) RETURNS SETOF memos AS $$
+BEGIN
+  RETURN QUERY SELECT * FROM memos WHERE content &@~ keywords;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+## アクセス権限の付与
+
+作成した`memos`テーブルに読み取り専用のアクセス権限を設定します
+
+<img width="1418" alt="create-policy" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/89403b68-a349-47a6-b86f-a24b75f2e706">
+
+```sql
+-- 1. Enable RLS
+alter table memos
+  enable row level security;
+
+-- 2. Create Policy
+create policy "Public memos are viewable by everyone."
+  on memos for select using (
+    true
+  );
+```
+
 ## フロントエンドの準備
 
 Supabaseのオフィシャルドキュメントを参考にSvelteでフロントエンドを作成します：
@@ -93,6 +143,8 @@ npm install @supabase/supabase-js
 touch .env
 vi .env
 ```
+
+- `.env`の中身
 
 ```vim
 VITE_SUPABASE_URL=YOUR_SUPABASE_URL
@@ -187,7 +239,10 @@ npm run dev
 
 http://localhost:5173 へブラウザでアクセス
 
-（画像）
+<img width="1418" alt="image" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/e137aef2-9335-40b2-85e3-1e816842fe95">
 
-検索すると検索結果が下に表示されます
+検索すると検索結果が下に表示されます(ローマ字で入力しても検索可能！)
+
+<img width="1418" alt="image" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/7a8bccb9-57bb-4bc0-8246-f62f834a7053">
+
 
