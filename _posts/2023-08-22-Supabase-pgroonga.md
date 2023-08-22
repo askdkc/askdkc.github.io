@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Supabase and PGroonga
+title: "Supabase and PGroonga: How to"
 categories: 
 - supabase
 - pgroonga
