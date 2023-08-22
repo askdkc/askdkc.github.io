@@ -30,7 +30,7 @@ Supabaseは日本語検索に強いPGroongaを使えるので、こいつをON�
 
 PGroongaのオフィシャルドキュメントのハウツー内に[「PostgRESTでPGroongaを使う方法」](https://pgroonga.github.io/ja/how-to/postgrest.html)という記事がありますので、これを参考にサンプルデータを作っていきます
 
-- サンプルデータ
+### サンプルデータ
 
 <img width="1418" alt="table-creation" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/ae9ab209-0eee-4817-805d-942c88b5df24">
 
@@ -48,7 +48,7 @@ INSERT INTO memos VALUES (4, 'groongaコマンドがあります。','今日は�
 
 ```
 
-- サンプルデータへの検索用`PGroonga`インデックス作成
+### サンプルデータへの検索用`PGroonga`インデックス作成
 
 <img width="1418" alt="create-indexes" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/44377810-dc0a-4407-b659-5357f8e61510">
 
@@ -83,7 +83,7 @@ CREATE INDEX pgroonga_content_search_index ON memos USING pgroonga (content)
 
 ```
 
-- `PGroonga`検索用ストアドファンクション作成
+## `PGroonga`検索用ストアドファンクション作成
 
 <img width="1418" alt="create-function" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/db6bfeca-b581-45ee-aefc-930b29d5bec5">
 
@@ -129,38 +129,38 @@ Supabaseのオフィシャルドキュメントを参考にSvelteでフロント
 
 https://supabase.com/docs/guides/getting-started/tutorials/with-svelte
 
-1. Svelteの準備
+### Svelteの準備
 
 ```bash
 npm create vite@latest supabase-svelte -- --template svelte-ts
 cd supabase-svelte
 npm install
 ```
-2. `supabase-js`のインストール
+### `supabase-js`のインストール
 
 ```bash
 npm install @supabase/supabase-js
 ```
 
-3. `.env`ファイルの作成
+### `.env`ファイルの作成
 
 ```bash
 touch .env
 vi .env
 ```
 
-SupabaseのProject Settings > API からSUPABASE_URLとSUPABASE_ANON_KEYをゲットします
+Supabaseの `Project Settings > API` から`SUPABASE_URL`と`SUPABASE_ANON_KEY`をゲットします
 
 <img width="1418" alt="env-keys" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/9381aee1-ec04-4115-906d-18cf73d173d9">
 
-- `.env`の中身に記載
+#### `.env`の中身に記載
 
 ```vim
 VITE_SUPABASE_URL=YOUR_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
-4. Supabaseへの接続用クライアントファイル準備
+### Supabaseへの接続用クライアントファイル準備
 
 `src/supabaseClient.ts`ファイルを作成し、次の中身を記載：
 
@@ -174,7 +174,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 ```
 
-5. 検索用フロントエンド作成
+### 検索用フロントエンド作成
 
 `src/App.svelte`を次のように変更：
 
@@ -238,7 +238,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 </style>
 ```
 
-6. 動作確認
+##  動作確認
 
 Svelteをコンパイルしてアクセス
 
