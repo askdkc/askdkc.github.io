@@ -151,7 +151,7 @@ vi .env
 
 SupabaseのProject Settings > API からSUPABASE_URLとSUPABASE_ANON_KEYをゲットします
 
-![Alt text](image.png)
+<img width="1418" alt="env-keys" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/9381aee1-ec04-4115-906d-18cf73d173d9">
 
 - `.env`の中身に記載
 
