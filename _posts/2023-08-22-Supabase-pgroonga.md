@@ -1,5 +1,6 @@
 ---
 layout: post
+title: Supabase and PGroonga
 categories: 
 - supabase
 - pgroonga
