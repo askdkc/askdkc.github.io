@@ -78,7 +78,7 @@ CREATE INDEX pgroonga_content_search_index ON memos USING pgroonga (content)
       "unify_symbol", false,
       "unify_digit", false,
       "report_source_location", true
-		)',
+    )',
   );
 
 ```
@@ -119,7 +119,7 @@ alter table memos
 create policy "Public memos are viewable by everyone."
   on memos for select using (
     true
-  );
+);
 
 ```
 
