@@ -35,6 +35,8 @@ PGroongaのオフィシャルドキュメントのハウツー内に[「PostgRES
 
 <img width="1418" alt="table-creation" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/ae9ab209-0eee-4817-805d-942c88b5df24">
 
+#### SQLの中身
+
 ```sql
 CREATE TABLE memos (
   id integer,
@@ -52,6 +54,8 @@ INSERT INTO memos VALUES (4, 'groongaコマンドがあります。','今日は�
 ### サンプルデータへの検索用`PGroonga`インデックス作成
 
 <img width="1418" alt="create-indexes" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/44377810-dc0a-4407-b659-5357f8e61510">
+
+#### SQLの中身
 
 ```sql
 CREATE INDEX pgroonga_title_search_index ON memos USING pgroonga (title) 
@@ -88,6 +92,8 @@ CREATE INDEX pgroonga_content_search_index ON memos USING pgroonga (content)
 
 <img width="1418" alt="create-function" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/db6bfeca-b581-45ee-aefc-930b29d5bec5">
 
+#### SQLの中身
+
 ```sql
 -- Title検索用
 CREATE FUNCTION find_title(keywords text) RETURNS SETOF memos AS $$
@@ -110,6 +116,8 @@ $$ LANGUAGE plpgsql;
 作成した`memos`テーブルに読み取り専用のアクセス権限を設定します
 
 <img width="1418" alt="create-policy" src="https://github.com/askdkc/askdkc.github.io/assets/7894265/89403b68-a349-47a6-b86f-a24b75f2e706">
+
+#### SQLの中身
 
 ```sql
 -- 1. Enable RLS
