@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/format-date';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+---
+<ol class="post-list">
+  {posts.map((post) => (
+    <li class="post-item">
+      <article>
+        <div class="post-item__meta">
+          <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+          {post.data.tags[0] && <span>{post.data.tags[0]}</span>}
+        </div>
+        <h2><a href={`/${post.data.slug}.html`}>{post.data.title}</a></h2>
+        {post.data.description && <p>{post.data.description}</p>}
+        <a class="post-item__read" href={`/${post.data.slug}.html`} aria-label={`${post.data.title}を読む`}>
+          Read article &rarr;
+        </a>
+      </article>
+    </li>
+  ))}
+</ol>

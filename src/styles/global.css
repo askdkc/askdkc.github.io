@@ -1,0 +1,613 @@
+:root {
+  color-scheme: light;
+  --bg: #fbfaf7;
+  --surface: #f2f0ea;
+  --surface-strong: #e8e5dd;
+  --text: #242321;
+  --muted: #716e67;
+  --line: #dedbd2;
+  --accent: #5b4bdb;
+  --accent-strong: #4434bd;
+  --focus: #b33f19;
+  --code-border: #d7d4cb;
+  --reading-width: 720px;
+  --wide-width: 1080px;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #121311;
+  --surface: #1b1d19;
+  --surface-strong: #262923;
+  --text: #efeee8;
+  --muted: #a9a79d;
+  --line: #353831;
+  --accent: #b8abff;
+  --accent-strong: #d0c7ff;
+  --focus: #ffb38f;
+  --code-border: #3c4038;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #121311;
+    --surface: #1b1d19;
+    --surface-strong: #262923;
+    --text: #efeee8;
+    --muted: #a9a79d;
+    --line: #353831;
+    --accent: #b8abff;
+    --accent-strong: #d0c7ff;
+    --focus: #ffb38f;
+    --code-border: #3c4038;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--accent-strong);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 10;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.35rem;
+  background: var(--text);
+  color: var(--bg);
+  transform: translateY(-150%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header__inner,
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  width: min(calc(100% - 3rem), var(--wide-width));
+  min-height: 76px;
+  margin: 0 auto;
+}
+
+.site-brand {
+  font-size: 1.05rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.site-brand__suffix {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.3rem;
+  margin-left: auto;
+  margin-right: 1.3rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+.site-nav a[aria-current='page'] {
+  color: var(--text);
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.theme-toggle__icon {
+  display: block;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  box-shadow: 0.25rem -0.25rem 0 -0.08rem var(--bg), 0.25rem -0.25rem 0 0.02rem currentColor;
+}
+
+.home-shell,
+.page-shell {
+  width: min(calc(100% - 3rem), var(--wide-width));
+  margin: 0 auto;
+}
+
+.home-shell {
+  padding: 7rem 0 8rem;
+}
+
+.home-intro {
+  max-width: 760px;
+  padding-bottom: 6rem;
+}
+
+.eyebrow {
+  margin: 0 0 1.25rem;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.eyebrow a {
+  color: inherit;
+}
+
+.home-intro h1 {
+  max-width: 760px;
+  margin: 0;
+  font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.home-intro__description {
+  max-width: 500px;
+  margin: 2rem 0 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.section-heading span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.post-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.post-item {
+  padding: 2rem 0 2.35rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-item__meta {
+  display: flex;
+  gap: 0.85rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.post-item__meta span {
+  color: var(--accent-strong);
+}
+
+.post-item h2 {
+  max-width: 800px;
+  margin: 0.65rem 0 0.5rem;
+  font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 550;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.post-item h2 a {
+  text-decoration: none;
+}
+
+.post-item p {
+  max-width: 700px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.post-item__read {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--accent-strong);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.article-shell {
+  width: min(calc(100% - 3rem), var(--reading-width));
+  margin: 0 auto;
+  padding: 5rem 0 8rem;
+}
+
+.article-header {
+  padding-bottom: 3.5rem;
+}
+
+.article-title {
+  margin: 0;
+  font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  font-size: clamp(2.45rem, 7vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.03;
+  overflow-wrap: anywhere;
+}
+
+.article-description {
+  margin: 1.5rem 0 0;
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1.75;
+}
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  margin-top: 1.65rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0;
+  margin: 1.35rem 0 0;
+  list-style: none;
+}
+
+.tag-list li {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.prose {
+  font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.95;
+  overflow-wrap: anywhere;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin: 2.8em 0 0.7em;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+
+.prose h1 {
+  font-size: 2rem;
+}
+
+.prose h2 {
+  font-size: 1.65rem;
+}
+
+.prose h3 {
+  font-size: 1.3rem;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose table {
+  margin: 1.25em 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose li + li {
+  margin-top: 0.45em;
+}
+
+.prose blockquote {
+  padding: 0.5rem 1.25rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+.prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 0.6rem;
+}
+
+.prose pre {
+  max-width: 100%;
+  padding: 1.1rem 1.2rem;
+  margin: 1.8rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--code-border);
+  border-radius: 0.65rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose :not(pre) > code {
+  padding: 0.13em 0.35em;
+  border-radius: 0.25rem;
+  background: var(--surface);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.86em;
+}
+
+:root[data-theme='dark'] .prose .astro-code {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+:root[data-theme='dark'] .prose .astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .prose .astro-code {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+
+  :root:not([data-theme]) .prose .astro-code span {
+    color: var(--shiki-dark) !important;
+  }
+}
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--surface);
+}
+
+.article-footer {
+  padding-top: 3.5rem;
+  margin-top: 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.back-link,
+.button-link {
+  color: var(--accent-strong);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.page-shell {
+  max-width: var(--reading-width);
+  padding: 6rem 0 8rem;
+}
+
+.page-shell h1,
+.page-shell--centered h1 {
+  margin-top: 0;
+  font-size: clamp(2.3rem, 6vw, 4.2rem);
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.page-shell--centered {
+  text-align: center;
+}
+
+.page-shell--centered .eyebrow {
+  margin-bottom: 1rem;
+}
+
+.button-link {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+}
+
+.site-footer__inner {
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 110px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+}
+
+@media (max-width: 680px) {
+  .site-header__inner,
+  .site-footer__inner,
+  .home-shell,
+  .page-shell {
+    width: min(calc(100% - 2rem), var(--wide-width));
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    min-height: 0;
+    padding: 0.75rem 0;
+  }
+
+  .site-nav {
+    order: 3;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--line);
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .theme-toggle {
+    margin-left: auto;
+    padding: 0.5rem 0.65rem;
+  }
+
+  .home-shell {
+    padding: 4.5rem 0 6rem;
+  }
+
+  .home-intro {
+    padding-bottom: 4rem;
+  }
+
+  .article-shell {
+    width: min(calc(100% - 2rem), var(--reading-width));
+    padding: 4rem 0 6rem;
+  }
+
+  .article-header {
+    padding-bottom: 2.5rem;
+  }
+
+  .prose {
+    font-size: 1.04rem;
+  }
+
+  .prose pre {
+    padding: 0.9rem;
+    margin-right: -0.25rem;
+    margin-left: -0.25rem;
+    font-size: 0.76rem;
+  }
+
+  .site-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 130px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="About | dkc's notes"
+  description="About dkc's notes."
+  canonical={new URL('/about/', Astro.site ?? 'https://askdkc.github.io')}
+>
+  <main id="main-content" class="page-shell">
+    <article class="prose">
+      <p class="eyebrow">About</p>
+      <h1>About this notebook</h1>
+      <p>This is the about page.</p>
+      <p>All your base are belong to us.</p>
+    </article>
+  </main>
+</BaseLayout>

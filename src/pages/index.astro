@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+
+const posts = (await getCollection('posts', ({ data }) => {
+  return import.meta.env.PROD ? !data.draft : true;
+})).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout title="dkc's notes" description="Notes on software, databases, and making things.">
+  <main id="main-content" class="home-shell">
+    <section class="home-intro" aria-labelledby="home-title">
+      <p class="eyebrow">dkc / notes</p>
+      <h1 id="home-title">Small notes on software and making things.</h1>
+      <p class="home-intro__description">Experiments, fixes, and things worth remembering.</p>
+    </section>
+
+    <section aria-labelledby="latest-heading">
+      <div class="section-heading">
+        <h2 id="latest-heading">Latest notes</h2>
+        <span>{posts.length} articles</span>
+      </div>
+      <PostList posts={posts} />
+    </section>
+  </main>
+</BaseLayout>

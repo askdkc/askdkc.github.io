@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../lib/format-date';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const site = Astro.site ?? new URL('https://askdkc.github.io');
+const canonical = new URL(`/${post.data.slug}.html`, site);
+const updatedDate = post.data.updatedDate ?? post.data.pubDate;
+---
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  canonical={canonical}
+  type="article"
+  publishedAt={post.data.pubDate}
+  updatedAt={post.data.updatedDate}
+  author={post.data.author}
+>
+  <main id="main-content">
+    <article class="article-shell h-entry">
+      <header class="article-header">
+        <p class="eyebrow"><a href="/">Notes</a> / {post.data.tags[0] ?? 'Article'}</p>
+        <h1 class="article-title p-name">{post.data.title}</h1>
+        {post.data.description && <p class="article-description">{post.data.description}</p>}
+        <div class="article-meta">
+          <time class="dt-published" datetime={post.data.pubDate.toISOString()}>
+            Published {formatDate(post.data.pubDate)}
+          </time>
+          {post.data.updatedDate && (
+            <time class="dt-modified" datetime={updatedDate.toISOString()}>
+              Updated {formatDate(updatedDate)}
+            </time>
+          )}
+          <span class="p-author">by {post.data.author}</span>
+        </div>
+        {post.data.tags.length > 0 && (
+          <ul class="tag-list" aria-label="Tags">
+            {post.data.tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+        )}
+      </header>
+
+      <div class="article-content e-content prose">
+        <slot />
+      </div>
+
+      <footer class="article-footer">
+        <a class="back-link" href="/">&larr; All notes</a>
+      </footer>
+    </article>
+  </main>
+</BaseLayout>

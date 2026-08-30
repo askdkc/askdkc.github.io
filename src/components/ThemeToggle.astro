@@ -1,0 +1,42 @@
+<button
+  class="theme-toggle"
+  type="button"
+  data-theme-toggle
+  aria-label="テーマをダークに切り替え"
+  aria-pressed="false"
+>
+  <span class="theme-toggle__icon" aria-hidden="true"></span>
+  <span data-theme-label>ダーク</span>
+</button>
+
+<script>
+  const button = document.querySelector('[data-theme-toggle]');
+
+  if (button instanceof HTMLButtonElement) {
+    const label = button.querySelector('[data-theme-label]');
+    const root = document.documentElement;
+
+    const updateLabel = () => {
+      const isDark = root.dataset.theme === 'dark';
+      button.setAttribute('aria-pressed', String(isDark));
+      button.setAttribute('aria-label', isDark ? 'テーマをライトに切り替え' : 'テーマをダークに切り替え');
+      if (label) label.textContent = isDark ? 'ライト' : 'ダーク';
+      document
+        .querySelector('[data-theme-color]')
+        ?.setAttribute('content', isDark ? '#121311' : '#fbfaf7');
+    };
+
+    button.addEventListener('click', () => {
+      const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = nextTheme;
+      try {
+        localStorage.setItem('theme', nextTheme);
+      } catch {
+        // Private browsing may deny storage; the current page still changes theme.
+      }
+      updateLabel();
+    });
+
+    updateLabel();
+  }
+</script>

@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('posts', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post }
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<ArticleLayout post={post}>
+  <Content />
+</ArticleLayout>

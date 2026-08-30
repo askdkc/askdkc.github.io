@@ -1,0 +1,80 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: URL;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+  updatedAt?: Date;
+  author?: string;
+}
+
+const {
+  title,
+  description = 'There is no spoon.',
+  canonical,
+  type = 'website',
+  publishedAt,
+  updatedAt,
+  author = 'dkc'
+} = Astro.props;
+const site = Astro.site ?? new URL('https://askdkc.github.io');
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site);
+const articleJsonLd =
+  type === 'article' && publishedAt
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        url: canonicalUrl.href,
+        datePublished: publishedAt.toISOString(),
+        dateModified: (updatedAt ?? publishedAt).toISOString(),
+        author: {
+          '@type': 'Person',
+          name: author
+        }
+      }
+    : null;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fbfaf7" data-theme-color />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href={new URL('/feed.xml', site)} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    {articleJsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />}
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        let theme = systemTheme;
+        try {
+          const saved = localStorage.getItem('theme');
+          if (saved === 'dark' || saved === 'light') theme = saved;
+        } catch {}
+        root.dataset.theme = theme;
+        document.querySelector('[data-theme-color]')?.setAttribute('content', theme === 'dark' ? '#121311' : '#fbfaf7');
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
