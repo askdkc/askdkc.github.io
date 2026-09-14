@@ -4,7 +4,7 @@ description: "理由は分からず、ある日突然Xのアカウントは停�
 pubDate: 2026-09-14
 tags: [notes]
 draft: false
-slug: "my-x-account-suspended"
+slug: "x/2026/09/14/x-account-suspended"
 ---
 Xのアカウントが停止になっちゃった
 
