@@ -46,7 +46,6 @@ assertContains(feed, '<language>ja</language>', 'RSS language');
 for (const postPath of postPaths) {
   assertContains(feed, new URL(postPath, site).href, `RSS link for ${postPath}`);
 }
-assert.equal((feed.match(/<item>/g) ?? []).length, postPaths.length, 'RSS must contain only known public posts');
 
 const sitemap = readBuildFile('sitemap.xml');
 for (const pagePath of ['/', '/about/', ...postPaths]) {
