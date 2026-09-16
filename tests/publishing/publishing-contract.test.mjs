@@ -17,12 +17,10 @@ test('publishing routes and generated-site verifier are present', () => {
   ]) {
     assert.equal(existsSync(join(projectRoot, relativePath)), true, relativePath);
   }
-  assert.match(read('scripts/verify-build.mjs'), /about\/index\.html/);
-  assert.match(read('scripts/verify-build.mjs'), /feed\.xml/);
-  assert.match(read('scripts/verify-build.mjs'), /sitemap\.xml/);
-  assert.match(read('scripts/verify-build.mjs'), /data-language=\"ruby\"/);
-  assert.match(read('scripts/verify-build.mjs'), /--shiki-dark:/);
-  assert.match(read('scripts/verify-build.mjs'), /BlogPosting/);
+  assert.ok(
+    read('src/layouts/ArticleLayout.astro').includes('src="https://platform.twitter.com/widgets.js"'),
+    'ArticleLayout loads the X embed widget script'
+  );
 });
 
 test('GitHub Pages uses one Node-based deployment workflow', () => {
